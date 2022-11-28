@@ -1,0 +1,126 @@
+                                    Angular basics document
+
+angular is  the one of the powerful framework to build a froent end framework
+
+we can  use  .HTTP
+
+    file to create  the froent ennt
+
+we can use .CSS
+    
+    file  to create the style to html.
+
+we can use .ts 
+
+    file to create the write the besniss logics to frent end 
+   get,put,post,etc.
+
+
+THERE ARE THE STRUCTURE OF ANGULAR IS
+
+ *.HTML
+ *.CSS
+ *SPEC.TS
+ *.TS
+
+ TO CREATE THE ANGULAR project 
+
+ first you want to install 
+
+ANGULAR
+
+  npm install -global @angular/cli
+
+THEN CREATE PROJECT
+  
+  ng new ______ ->project name
+
+Then 
+
+  in side the project go to src->app folder
+
+ and create COMPONEND there
+
+ ng generate component ____-> component name 
+ 
+ ng g c ___
+
+AND to run the code 
+ 
+ ng serve
+
+ ng s
+ 
+ ng s --open
+
+ the index.html is  main frame of the frent view is using in testing
+ Style.css is the main file to hit the give styel to the full fiele
+
+
+ the main .ts is using
+
+        is  the  main file if u run this code it will run the project
+        it goes to ser->app-AppModule and it goes to  src-> environmnt -env.ts
+        hit and run the proggram
+
+        import { AppModule } from './app/app.module';
+        import { environment } from './environments/environment';
+
+environements
+        
+        is   use to link you project url to  specifi to all component 
+
+   in case if you want to change the url chang her is easy to replace evry componet
+
+      !!! OTHER WISE YOU DARECTELY LINK YOU URL IN TO THE COMPONET YOU WANT TO REPLACE  EACH AND EVERY COMPONENT IS COMPLICATED !!!
+
+ASSETS
+  
+  src->assets
+
+ this file is holding ther ervery image AND ALL MEDIA  file of  over projects.
+
+
+  
+THE ARCTECTR OF THE ANGULAR
+        
+       Link= https://v2.angular.io/docs/ts/latest/guide/architecture.html
+
+       Angular is a framework for building client applications in HTML and either JavaScript or a language like TypeScript that compiles to JavaScript.
+
+  The framework consists of several libraries, some of them core and some optional.
+ 
+Modules
+Components
+Templates
+Metadata
+Data binding
+Directives
+Services
+Dependency injection
+
+
+MODELES
+-------
+     Angular apps are modular and Angular has its own modularity system called Angular modules or NgModules.
+ 
+ 
+Every Angular app has at least one Angular module class, the root module,
+conventionally named AppModule.
+
+
+      || src/app/app.module.ts  ||
+
+
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+@NgModule({
+  imports:      [ BrowserModule ], --> we want to declare what are the componennt are imported
+  providers:    [ Logger ],
+  declarations: [ AppComponent ],--> we want to declre the created componet name 
+  exports:      [ AppComponent ],
+  bootstrap:    [ AppComponent ],
+  enteryComponent[pop ]--> is useing to popup wondow eg(error,account creatddd)
+
+})
+export class AppModule { }

@@ -1,0 +1,80 @@
+apps.py
+
+from django.apps import AppConfig
+
+
+class EmpConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'emp'
+
+
+models.py
+---------
+
+from django.db import models
+#from phone_field import PhoneField
+from phonenumber_field.modelfields import PhoneNumberField
+
+
+class Todo(models.Model):
+    employee_name = models.CharField(max_length=255)
+    employee_id =models.IntegerField()
+    phone_number = PhoneNumberField()   
+    # phone_number = PhoneField(blank=True, help_text='Contact phone number')
+    mail_id= models.EmailField(max_length = 254)
+    date_of_birth = models.DateField()
+   # isCompleted= models.BooleanField(default=False)
+ 
+ 
+
+serializers.py
+-------------
+
+from rest_framework import serializers
+from .models import Todo
+
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = Todo
+      fields = "__all__"
+
+
+views.py
+--------
+
+from django.shortcuts import render
+# Create your views here.
+from django.http.response import Http404
+#from django.shortcuts import render
+from rest_framework import viewsets
+#from rest_framework.views import APIView
+#rom rest_framework.generics import GenericAPIView
+
+from rest_framework.viewsets import ModelViewSet
+from .models import Todo
+from .serializers import TodoSerializer
+from rest_framework.response import Response
+#from rest_framework import permissions
+from rest_framework.permissions import AllowAny
+
+class todocrud(viewsets.ModelViewSet):
+    serializer_class = TodoSerializer
+    queryset = Todo.objects.all()
+    #permission_classes = [AllowAny]
+
+urls.py
+-------
+
+from django.urls import path,include
+from .views import todocrud
+from rest_framework.routers import DefaultRouter
+
+router=DefaultRouter()
+router.register('todo1', todocrud)
+
+urlpatterns = [
+        path('todo11', include(router.urls)),
+       
+    ]
+
+ 

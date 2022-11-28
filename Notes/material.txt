@@ -1,0 +1,13 @@
+
+#mat-button
+import { FormsModule } from '@angular/forms';
+MatButtonModule
+
+
+      <button  mat-icon-button color="warn" (click)="onsave()" >Accent</button>
+      <button  mat-stroked-button color="warn" (click)="onsave()" >Accent</button>
+      <button  mat-raised-button color="warn" (click)="onsave()" >Accent</button>
+      <button  mat-flat-button color="warn" (click)="onsave()" >Accent</button>
+      <button  mat-fab color="warn" (click)="onsave()" >Accent</button>
+      <button  mat-mini-fab color="warn" (click)="onsave()" >Accent</button>
+#mat

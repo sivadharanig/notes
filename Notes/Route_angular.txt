@@ -1,0 +1,32 @@
+angular routing
+
+router.ts
+----------
+
+const routes: Routes = [
+  {path:'',component: ComponentComponent},
+  {path:'string',component: SringbindingComponent},
+  {path:'even',component: EventBindingComponent},
+  {path:'pro',component: ProprtyBindingComponent},
+  {path:'two-way',component: TwoWayBindingComponent},
+  {path:'life-cycle',component:LifeCycleComponent},
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+how to write click and enter the componet 
+-----------------------------------------
+
+<button routerLink="/two-way" >Two-Way</button> 
+                    Here type the router path name
+
+
+app.html
+--------
+
+  <router-outlet></router-outlet>

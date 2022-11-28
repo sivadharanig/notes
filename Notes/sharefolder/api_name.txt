@@ -1,0 +1,60 @@
+
+------------------------------
+views.py
+-------
+api_name
+
+
+from django.shortcuts import render
+from .serializers import apiserializer
+from rest_framework.decorators import api_view
+from . import models
+from rest_framework.response import Response
+from .serializers import apiserializer
+from django.http import JsonResponse , HttpResponse
+
+@api_view(['GET'])
+def dname(request):    
+        
+        datas=models.api.objects.all()
+        serializer=apiserializer(datas,many=True)
+        return Response(serializer.data)
+
+
+@api_view(['POST'])
+def postname(request, *args, **kwargs):
+        serializer=apiserializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        re=serializer.save()
+        return JsonResponse(serializer.data)
+
+# generic views.py
+
+from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
+from .serializers import apiserializer
+from rest_framework.permissions import AllowAny
+
+class username(viewsets.ModelViewSet):
+      queryset=api.obje
+      serializer1_class =apiserializer
+      permission_classes = [AllowAny]    
+      
+
+urls.py-
+-------
+
+from django.urls import path
+from . import views
+urlpatterns=[
+    path('view/', views.dname,name='all data'),
+    path('insert/', views.postname,name='all data'),
+    path(r'user-create/$',  views.username, name="user-create"),
+]
+
+# from django.conf.urls import url
+# from . import views
+
+# urlpatterns = [
+#    url(r'^user-create/$',  views.username, name="user-create"),
+# ]

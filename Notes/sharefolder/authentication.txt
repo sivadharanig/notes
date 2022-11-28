@@ -1,0 +1,42 @@
+apps.py
+------
+
+from django.apps import AppConfig
+
+
+class AuthConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'auth'
+
+
+models.py
+---------
+
+empy
+
+views.py
+------
+
+from .serializers import MyTokenObtainPairSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class MyObtainTokenPairView(TokenObtainPairView):
+    permission_classes = (AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer
+
+
+urls.py
+------
+
+from django.urls import path
+from auth.views import MyObtainTokenPairView
+from rest_framework_simplejwt.views import TokenRefreshView
+
+
+urlpatterns = [
+    path('login/', MyObtainTokenPairView.as_view(), name='token_obtain_pair'),
+    path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+]
+

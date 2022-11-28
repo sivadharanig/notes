@@ -1,0 +1,15 @@
+26-09-22
+________
+1)daractives
+2)data buindings                 -https://www.youtube.com/watch?v=k6CyKtn4MOE-compleated 26-27 date
+3)events
+4)Router         -compleated     -https://www.youtube.com/watch?v=k6CyKtn4MOE
+5)ng module                      - https://www.youtube.com/watch?v=weN2vMJqTe8
+6)ngif,ngfor,ngswich,ngswichcase -https://www.youtube.com/watch?v=Ljh7ufJJQuA
+7)model                        
+8)ng-model why to use in form
+
+9)ty-totorial point
+10)array,data type,
+11)even-bindings
+12)ng-show,ng-hide,befor,after

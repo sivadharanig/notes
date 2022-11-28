@@ -1,0 +1,103 @@
+users:
+-----
+
+
+
+serializers.py
+-------------
+
+from rest_framework import serializers
+from django.contrib.auth.models import User #using to create model without model line 5
+from rest_framework.validators import UniqueValidator
+from django.contrib.auth.password_validation import validate_password
+# User Serializer
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email')
+
+# Register Serializer
+class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+            required=True,
+            validators=[UniqueValidator(queryset=User.objects.all())]
+            )
+
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password','password2')
+        extra_kwargs = {'password': {'write_only': True}}  # is using to Hide the possword
+        extra_kwargs = {'password2': {'write_only': True}}  # is using to Hide the possword
+        
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        return attrs
+           
+    def create(self, validated_data):
+        user = User.objects.create_user(validated_data['username'], validated_data['email'],validated_data['password'])
+
+        return user
+#login view
+
+views.py
+--------
+
+
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from knox.models import AuthToken
+from .serializers import UserSerializer, RegisterSerializer
+from django.contrib.auth import login
+
+from rest_framework import permissions
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.views import LoginView as KnoxLoginView
+
+
+# Register API
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({"user information":{
+        "user": UserSerializer(user, context=self.get_serializer_context()).data,
+        "token": AuthToken.objects.create(user)[1]}
+        })
+
+class LoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginAPI, self).post(request, format=None) #super
+
+
+urls.py
+========
+
+from .views import RegisterAPI
+from django.urls import path
+#login and logout
+from knox import views as knox_views
+from .views import LoginAPI
+from django.urls import path
+urlpatterns = [
+    path('api/register/', RegisterAPI.as_view(), name='register'),
+    path('api/login/', LoginAPI.as_view(), name='login'),
+    path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
+    path('api/logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
+]
+
+
+
+
+app-->emp

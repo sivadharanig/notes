@@ -1,0 +1,12 @@
+@api_view(['GET'])
+def dname(request):
+    user = request.user
+    print(user)
+    if user.is_authenticated:
+        datas=Todo.objects.all()
+        serializer=TodoSerializer(datas,many=True)
+        
+        return Response({
+            'user_data': serializer.data
+        })
+    return Response({'error': 'token need'})
